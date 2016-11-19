@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import com.example.paulnikonowicz.zocdocapplication.dao.Network;
 import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
+import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +37,7 @@ public class MainActivity extends FragmentActivity {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onInitialize(InitializeEvent event){
+        EventBus.getDefault().post(new StatusEvent("Getting data from fandango"));
         String result = Network.getSomething();
         EventBus.getDefault().post(new DataRetrievedEvent(result));
     }

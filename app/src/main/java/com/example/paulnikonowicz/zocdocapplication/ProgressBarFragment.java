@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
+import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,5 +58,10 @@ public class ProgressBarFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loadBasicListData(DataRetrievedEvent event){
         getView().setVisibility(View.GONE);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateStatus(StatusEvent event) {
+        textView.setText(event.message);
     }
 }
