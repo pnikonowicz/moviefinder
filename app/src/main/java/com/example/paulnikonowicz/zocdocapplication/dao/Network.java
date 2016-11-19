@@ -1,7 +1,14 @@
 package com.example.paulnikonowicz.zocdocapplication.dao;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,8 +25,28 @@ public class Network {
     public String retrieveMovieListFromZipCode(int zip) {
         String todaysDate = todaysDate();
         String apiKey = "488kpuyjtxzat8q3qtg7sekx";
-        String url = "http://data.tmsapi.com/v1.1/movies/showings";
-        return "{}";
+        String host = "data.tmsapi.com/v1.1/movies/showings";
+        String urlString = getUrl(host, todaysDate, apiKey, zip+"");
+
+        URL url;
+        try {
+            url = new URL(urlString);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            String json = IOUtils.toString(in);
+            return json;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if(urlConnection!=null)
+                urlConnection.disconnect();
+        }
     }
 
     public String getUrl(String host, String startDate, String apiKey, String zip) {

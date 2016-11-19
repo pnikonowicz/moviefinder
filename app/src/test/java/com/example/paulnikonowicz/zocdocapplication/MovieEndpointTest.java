@@ -16,19 +16,17 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class MovieEndpointTest {
-    private String json;
     private Network network;
 
     @Before
     public void setup() {
         network = new Network();
-        json = network.retrieveMovieListFromZipCode(98102);
-        assertNotNull(json);
     }
 
     @Test
-    public void canCreateObjectFromJsonResult() throws Exception {
-        Assert.fail(json);
+    public void canRetrieveJson() throws Exception {
+        String json = network.retrieveMovieListFromZipCode(98102);
+        Assert.assertNotNull(json);
     }
 
     @Test
@@ -40,7 +38,7 @@ public class MovieEndpointTest {
 
     @Test
     public void urlIsCorrect() {
-        String url = network.getUrl("host", "date", "api", "zip");
-        Assert.assertEquals("http://host?startDate=date&zip=zip&api_key=api", url);
+        String url = network.getUrl("data.tmsapi.com/v1.1/movies/showings", "2016-11-19", "488kpuyjtxzat8q3qtg7sekx", "98102");
+        Assert.assertEquals("http://data.tmsapi.com/v1.1/movies/showings?startDate=2016-11-19&zip=98102&api_key=488kpuyjtxzat8q3qtg7sekx", url);
     }
 }
