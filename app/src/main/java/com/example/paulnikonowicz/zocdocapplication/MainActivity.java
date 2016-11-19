@@ -4,8 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.example.paulnikonowicz.zocdocapplication.dao.Network;
-import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
-import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
+import com.example.paulnikonowicz.zocdocapplication.event.RequestMovieData;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,7 +32,7 @@ public class MainActivity extends FragmentActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new InitializeEvent());
+        EventBus.getDefault().post(new RequestMovieData());
     }
 
     @Override
@@ -43,7 +42,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onInitialize(InitializeEvent event) {
+    public void onInitialize(RequestMovieData event) {
         EventBus.getDefault().post(new StatusEvent("Retrieving movie data"));
 
         network.getSomething();

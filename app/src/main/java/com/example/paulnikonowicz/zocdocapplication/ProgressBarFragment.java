@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
-import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
 import org.greenrobot.eventbus.EventBus;

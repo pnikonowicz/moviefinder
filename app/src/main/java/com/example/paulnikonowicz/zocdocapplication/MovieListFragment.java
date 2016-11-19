@@ -8,9 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.paulnikonowicz.zocdocapplication.dao.Network;
 import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
-import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +25,7 @@ public class MovieListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getView().setVisibility(View.GONE);
         EventBus.getDefault().register(this);
     }
 
@@ -42,10 +41,5 @@ public class MovieListFragment extends Fragment {
         listView.setText(event.text);
 
         getView().setVisibility(View.VISIBLE);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onInitialize(InitializeEvent event){
-        getView().setVisibility(View.GONE);
     }
 }
