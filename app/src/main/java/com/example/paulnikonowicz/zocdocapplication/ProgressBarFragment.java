@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.paulnikonowicz.zocdocapplication.dao.Network;
 import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.InitializeEvent;
 
@@ -20,27 +19,38 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoadingFragment extends Fragment {
+public class ProgressBarFragment extends Fragment {
+
+    private TextView textView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_loading, container, false);
+        return inflater.inflate(R.layout.progressbar_fragment, container, false);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        textView = (TextView) getView().findViewById(R.id.myTextProgress);
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+
+        textView = null;
+
         EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInitialize(InitializeEvent event){
+        textView.setText("Starting");
+
         getView().setVisibility(View.VISIBLE);
     }
 
