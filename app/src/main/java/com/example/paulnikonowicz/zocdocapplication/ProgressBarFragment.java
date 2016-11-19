@@ -35,6 +35,8 @@ public class ProgressBarFragment extends Fragment {
         super.onStart();
 
         textView = (TextView) getView().findViewById(R.id.myTextProgress);
+        textView.setText("Starting");
+        getView().setVisibility(View.VISIBLE);
 
         EventBus.getDefault().register(this);
     }
@@ -46,13 +48,6 @@ public class ProgressBarFragment extends Fragment {
         textView = null;
 
         EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onInitialize(InitializeEvent event){
-        textView.setText("Starting");
-
-        getView().setVisibility(View.VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
