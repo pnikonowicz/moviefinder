@@ -1,7 +1,7 @@
 package com.example.paulnikonowicz.zocdocapplication.dao;
 
 public class Network {
-    public static String getSomething() {
+    public String getSomething() {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

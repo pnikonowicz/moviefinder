@@ -13,6 +13,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends FragmentActivity {
+    private Network network;
+
+    public MainActivity() {
+        this(new Network());
+    }
+
+    public MainActivity(Network network) {
+        this.network = network;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,8 @@ public class MainActivity extends FragmentActivity {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onInitialize(InitializeEvent event){
         EventBus.getDefault().post(new StatusEvent("Getting data from fandango"));
-        String result = Network.getSomething();
+        
+        String result = network.getSomething();
         EventBus.getDefault().post(new DataRetrievedEvent(result));
     }
 }
