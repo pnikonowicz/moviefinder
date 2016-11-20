@@ -7,6 +7,8 @@ import org.json.JSONObject;
 public class Movie {
     private String rating;
     private String title;
+    private String imageLink;
+    private String description;
 
     public String getTitle() {
         return title;
@@ -32,8 +34,37 @@ public class Movie {
             movie.rating = "N/A";
         }
 
-        movie.title = jsonObject.getString("title");
+        if(jsonObject.has("title")) {
+            movie.title = jsonObject.getString("title");
+        } else {
+            movie.title = "Title Missing";
+        }
+
+        if(jsonObject.has("preferredImage")) {
+            JSONObject imageObject = jsonObject.getJSONObject("preferredImage");
+            if(imageObject.has("uri")) {
+                movie.imageLink = imageObject.getString("uri");
+            } else {
+                movie.imageLink = null;
+            }
+        } else {
+            movie.imageLink = null;
+        }
+
+        if(jsonObject.has("shortDescription")) {
+            movie.description = jsonObject.getString("shortDescription");
+        } else {
+            movie.description = "Description missing";
+        }
 
         return movie;
+    }
+
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

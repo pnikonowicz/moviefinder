@@ -12,28 +12,67 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class MoviesTest {
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> goodMovies;
+    private ArrayList<Movie> badMovies;
 
     @Before
     public void setup() throws JSONException {
         String json = "[{ 'tmsId': 'MV009070680000', 'rootId': '13042092', 'subType': 'Feature Film', 'title': 'Moonlight', 'releaseYear': 2016, 'releaseDate': '2016-09-02', 'titleLang': 'en', 'descriptionLang': 'en', 'entityType': 'Movie', 'genres': ['Drama'], 'longDescription': 'A young man deals with his dysfunctional home life and comes of age in Miami during the \\'War on Drugs\\' era. The story of his struggle to find himself is told across three defining chapters in his life as he experiences the ecstasy, pain, and beauty of falling in love while grappling with his own sexuality.', 'shortDescription': 'A young man experiences the joy and pain of falling in love while grappling with his own sexuality.', 'topCast': ['Mahershala Ali', 'Shariff Earp', 'Alex Hibbert'], 'directors': ['Barry Jenkins'], 'officialUrl': 'http://moonlight-movie.com/', 'qualityRating': { 'ratingsBody': 'TMS', 'value': '3.5' }, 'ratings': [{ 'body': 'Motion Picture Association of America', 'code': 'R' }], 'advisories': ['Adult Language', 'Adult Situations', 'Violence'], 'runTime': 'PT01H51M', 'preferredImage': { 'width': '240', 'height': '360', 'caption': { 'content': 'Moonlight (2016)', 'lang': 'en' }, 'uri': 'assets/p13042092_p_v5_aa.jpg', 'category': 'Poster Art', 'text': 'yes', 'primary': 'true' }, 'showtimes': [{ 'theatre': { 'id': '11008', 'name': 'SIFF Cinema Egyptian' }, 'dateTime': '2016-11-19T14:20', 'barg': false }, { 'theatre': { 'id': '11008', 'name': 'SIFF Cinema Egyptian' }, 'dateTime': '2016-11-19T16:45', 'barg': false }, { 'theatre': { 'id': '11008', 'name': 'SIFF Cinema Egyptian' }, 'dateTime': '2016-11-19T19:10', 'barg': false }, { 'theatre': { 'id': '11008', 'name': 'SIFF Cinema Egyptian' }, 'dateTime': '2016-11-19T21:30', 'barg': false }, { 'theatre': { 'id': '8184', 'name': 'Regal Meridian 16' }, 'dateTime': '2016-11-19T13:20', 'quals': 'Closed Captioned', 'barg': true, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AABFY&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '8184', 'name': 'Regal Meridian 16' }, 'dateTime': '2016-11-19T16:00', 'quals': 'Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AABFY&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '8184', 'name': 'Regal Meridian 16' }, 'dateTime': '2016-11-19T18:40', 'quals': 'Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AABFY&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '8184', 'name': 'Regal Meridian 16' }, 'dateTime': '2016-11-19T21:20', 'quals': 'Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AABFY&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '10602', 'name': 'Sundance Cinemas Seattle' }, 'dateTime': '2016-11-19T13:30', 'quals': '21+', 'barg': false }, { 'theatre': { 'id': '10602', 'name': 'Sundance Cinemas Seattle' }, 'dateTime': '2016-11-19T16:40', 'quals': '21+', 'barg': false }, { 'theatre': { 'id': '10602', 'name': 'Sundance Cinemas Seattle' }, 'dateTime': '2016-11-19T19:20', 'quals': '21+', 'barg': false }, { 'theatre': { 'id': '10602', 'name': 'Sundance Cinemas Seattle' }, 'dateTime': '2016-11-19T21:50', 'quals': '21+', 'barg': false }, { 'theatre': { 'id': '7955', 'name': 'AMC Loews Oak Tree 6' }, 'dateTime': '2016-11-19T10:50', 'quals': 'AMC Independent|Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AAAYZ&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '7955', 'name': 'AMC Loews Oak Tree 6' }, 'dateTime': '2016-11-19T14:00', 'quals': 'AMC Independent|Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AAAYZ&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '7955', 'name': 'AMC Loews Oak Tree 6' }, 'dateTime': '2016-11-19T16:40', 'quals': 'AMC Independent|Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AAAYZ&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '7955', 'name': 'AMC Loews Oak Tree 6' }, 'dateTime': '2016-11-19T19:10', 'quals': 'Closed Captioned|AMC Independent', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AAAYZ&m=164354&d=2016-11-19' }, { 'theatre': { 'id': '7955', 'name': 'AMC Loews Oak Tree 6' }, 'dateTime': '2016-11-19T21:50', 'quals': 'AMC Independent|Closed Captioned', 'barg': false, 'ticketURI': 'http://www.fandango.com/tms.asp?t=AAAYZ&m=164354&d=2016-11-19' }] }]";
-        movies = Movies.create(json);
+        goodMovies = Movies.create(json);
+        badMovies = Movies.create("[{}]");
     }
     @Test
     public void canGetMovie() {
-        int count = movies.size();
+        int count = goodMovies.size();
         Assert.assertEquals(1, count);
     }
 
     @Test
     public void canGetTitle() {
-        Movie movie = movies.get(0);
+        Movie movie = goodMovies.get(0);
         Assert.assertEquals("Moonlight", movie.getTitle());
     }
 
     @Test
     public void canGetRating() {
-        Movie movie = movies.get(0);
+        Movie movie = goodMovies.get(0);
         Assert.assertEquals("R", movie.getRating());
     }
+
+    @Test
+    public void canGetImaageLink() {
+        Movie movie = goodMovies.get(0);
+        Assert.assertEquals("assets/p13042092_p_v5_aa.jpg", movie.getImageLink());
+    }
+
+    @Test
+    public void canGetDescription() {
+        Movie movie = goodMovies.get(0);
+        Assert.assertEquals("A young man experiences the joy and pain of falling in love while grappling with his own sexuality.", movie.getDescription());
+    }
+
+    @Test
+    public void canHandleMissingTitle() {
+        Movie movie = badMovies.get(0);
+        Assert.assertEquals("Title Missing", movie.getTitle());
+    }
+
+    @Test
+    public void canHandleMissingRating() {
+        Movie movie = badMovies.get(0);
+        Assert.assertEquals("N/A", movie.getRating());
+    }
+
+    @Test
+    public void canHandleMissingImage() {
+        Movie movie = badMovies.get(0);
+        Assert.assertNull(movie.getImageLink());
+    }
+
+    @Test
+    public void canHandleMissingDescription() {
+        Movie movie = badMovies.get(0);
+        Assert.assertEquals("Description missing", movie.getDescription());
+    }
 }
+
