@@ -33,7 +33,7 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
 
         TextView title = (TextView) rowView.findViewById(R.id.title);
-        TextView rating = (TextView) rowView.findViewById(R.id.title);
+        TextView rating = (TextView) rowView.findViewById(R.id.rating);
 
         title.setText(movie.getTitle());
         rating.setText(movie.getRating());

@@ -47,7 +47,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     public void onStart() {
         super.onStart();
 
-        listView = (ListView) getView().findViewById(R.id.listview);
+        listView = (ListView) getView();
 
         listView.setOnItemClickListener(this);
         getView().setVisibility(View.GONE);
