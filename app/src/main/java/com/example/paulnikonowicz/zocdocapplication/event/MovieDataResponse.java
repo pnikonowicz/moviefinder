@@ -14,4 +14,8 @@ public class MovieDataResponse {
     public Movie[] getMovies() {
         return movies.toArray(new Movie[0]);
     }
+
+    public int movieCount() {
+        return getMovies().length;
+    }
 }

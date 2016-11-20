@@ -66,6 +66,8 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loadBasicListData(MovieDataResponse event){
+        EventBus.getDefault().post(new StatusEvent("Found " + event.movieCount() + " movies!"));
+
         listView.setAdapter(new MovieListAdapter(getActivity(), R.id.listview, event.getMovies()));
 
         getView().setVisibility(View.VISIBLE);
@@ -80,7 +82,6 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
             movies = fetchMoviesService.fetchMovies(event.zip);
 
             int movieCount = movies.size();
-            EventBus.getDefault().post(new StatusEvent("Found " + movieCount + " movies!"));
             EventBus.getDefault().post(new MovieDataResponse(movies));
         } catch (Exception e) {
             EventBus.getDefault().post(new CriticalErrorEvent(e));
