@@ -42,11 +42,11 @@ public class ProgressBarFragment extends Fragment {
 
     @Override
     public void onStop() {
-        super.onStop();
+        EventBus.getDefault().unregister(this);
 
         textView = null;
 
-        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
