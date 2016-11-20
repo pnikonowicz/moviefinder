@@ -2,6 +2,8 @@ package com.example.paulnikonowicz.zocdocapplication;
 
 import com.example.paulnikonowicz.zocdocapplication.dao.Movie;
 import com.example.paulnikonowicz.zocdocapplication.dao.Movies;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import junit.framework.Assert;
 
@@ -73,6 +75,28 @@ public class MoviesTest {
     public void canHandleMissingDescription() {
         Movie movie = badMovies.get(0);
         Assert.assertEquals("Description missing", movie.getDescription());
+    }
+
+    @Test
+    public void canCovertToJson() {
+        Movie movie = goodMovies.get(0);
+        Gson gson = new Gson();
+        String json = gson.toJson(movie);
+        String expected = "{'rating':'R','title':'Moonlight','imageLink':'assets/p13042092_p_v5_aa.jpg','description':'A young man experiences the joy and pain of falling in love while grappling with his own sexuality.'}";
+
+        Assert.assertEquals(expected, json.replaceAll("\"", "'"));
+    }
+
+    @Test
+    public void conConvertFromJson() {
+        Movie movie = goodMovies.get(0);
+        Gson gson = new Gson();
+        String json = gson.toJson(movie);
+        Movie returnMovie = gson.fromJson(json, Movie.class);
+
+        Assert.assertEquals(movie.getDescription(), returnMovie.getDescription());
+        Assert.assertEquals(movie.getImageLink(), returnMovie.getImageLink());
+        Assert.assertEquals(movie.getRating(), returnMovie.getRating());
     }
 }
 

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="ratingColor">#F5DC49</color>
+    <color name="strong">#0000FF</color>
     <color name="error">#FF0000</color>
 </resources>

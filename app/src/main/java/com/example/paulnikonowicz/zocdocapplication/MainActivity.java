@@ -18,18 +18,9 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 public class MainActivity extends FragmentActivity {
-    private FetchMoviesService fetchMoviesService;
     private View progressView;
     private View listView;
     private TextView textView;
-
-    public MainActivity() {
-        this(new FetchMoviesService());
-    }
-
-    public MainActivity(FetchMoviesService fetchMoviesService) {
-        this.fetchMoviesService = fetchMoviesService;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

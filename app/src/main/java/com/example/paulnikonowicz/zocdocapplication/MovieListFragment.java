@@ -1,6 +1,7 @@
 package com.example.paulnikonowicz.zocdocapplication;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.example.paulnikonowicz.zocdocapplication.event.CriticalErrorEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.MovieDataRequest;
 import com.example.paulnikonowicz.zocdocapplication.event.MovieDataResponse;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
+import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -24,17 +26,21 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+import static android.R.attr.value;
+
 
 public class MovieListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private FetchMoviesService fetchMoviesService;
+    private Gson gson;
     private ListView listView;
 
     public MovieListFragment() {
-        this(new FetchMoviesService());
+        this(new FetchMoviesService(), new Gson());
     }
 
-    public MovieListFragment(FetchMoviesService fetchMoviesService) {
+    public MovieListFragment(FetchMoviesService fetchMoviesService, Gson gson) {
         this.fetchMoviesService = fetchMoviesService;
+        this.gson = gson;
     }
 
     @Override
@@ -80,8 +86,6 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
         ArrayList<Movie> movies = null;
         try {
             movies = fetchMoviesService.fetchMovies(event.zip);
-
-            int movieCount = movies.size();
             EventBus.getDefault().post(new MovieDataResponse(movies));
         } catch (Exception e) {
             EventBus.getDefault().postSticky(new CriticalErrorEvent(e));
@@ -91,6 +95,8 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Movie m = (Movie) adapterView.getItemAtPosition(i);
-        Toast.makeText(getContext(), "TODO " + m, Toast.LENGTH_LONG);
+        Intent intent = MovieDetailsActivity.createIntent(getContext(), m);
+
+        startActivity(intent);
     }
 }
