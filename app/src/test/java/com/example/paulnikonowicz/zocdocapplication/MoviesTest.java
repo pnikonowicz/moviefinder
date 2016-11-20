@@ -9,8 +9,10 @@ import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class MoviesTest {
-    private Movies movies;
+    private ArrayList<Movie> movies;
 
     @Before
     public void setup() throws JSONException {
@@ -19,7 +21,7 @@ public class MoviesTest {
     }
     @Test
     public void canGetMovie() {
-        int count = movies.getCount();
+        int count = movies.size();
         Assert.assertEquals(1, count);
     }
 
