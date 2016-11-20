@@ -8,13 +8,25 @@
     tools:context="com.example.paulnikonowicz.zocdocapplication.MainActivity">
 
     <fragment android:name="com.example.paulnikonowicz.zocdocapplication.ProgressBarFragment"
+        android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
     <fragment android:name="com.example.paulnikonowicz.zocdocapplication.MovieListFragment"
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/error"
+        android:text="ERROR"
+        android:visibility="gone"
         />
 
 </FrameLayout>
