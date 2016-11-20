@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.example.paulnikonowicz.zocdocapplication.adapter.MovieListAdapter;
 import com.example.paulnikonowicz.zocdocapplication.dao.FetchMoviesService;
@@ -49,7 +48,13 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
         getListView().setOnItemClickListener(this);
 
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new MovieDataRequest(98102));
+
+        MovieDataResponse movieDataResponse = EventBus.getDefault().getStickyEvent(MovieDataResponse.class);
+        if(movieDataResponse == null) {
+            EventBus.getDefault().post(new MovieDataRequest(11234));
+        } else {
+            loadBasicListData(movieDataResponse);
+        }
     }
 
     @Override
@@ -64,10 +69,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void loadBasicListData(MovieDataResponse event){
         EventBus.getDefault().post(new StatusEvent("Found " + event.movieCount() + " movies!"));
-
         setListAdapter(new MovieListAdapter(getActivity(), R.layout.movierow_layout, event.getMovies()));
-
-        getView().setVisibility(View.VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
@@ -76,8 +78,8 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
 
         ArrayList<Movie> movies = null;
         try {
-            movies = fetchMoviesService.fetchMovies(event.zip);
-            EventBus.getDefault().post(new MovieDataResponse(movies));
+            movies = fetchMoviesService.fetchMovies();
+            EventBus.getDefault().postSticky(new MovieDataResponse(movies));
         } catch (Exception e) {
             EventBus.getDefault().postSticky(new CriticalErrorEvent(e));
         }

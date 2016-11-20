@@ -53,12 +53,12 @@ public class MovieDetailsActivity extends FragmentActivity implements View.OnCli
         TextView description = (TextView) findViewById(R.id.description);
         button = (Button) findViewById(R.id.button);
 
-        title.setText(movie.getTitle());
-        description.setText(movie.getDescription());
+        title.setText(movie.title);
+        description.setText(movie.description);
         button.setOnClickListener(this);
 
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new ImageRequest(movie.getImageLink()));
+        EventBus.getDefault().post(new ImageRequest(movie.imageLink));
         super.onStart();
     }
 

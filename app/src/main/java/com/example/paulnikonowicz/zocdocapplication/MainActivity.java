@@ -53,9 +53,10 @@ public class MainActivity extends FragmentActivity {
         super.onStop();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void loadBasicListData(MovieDataResponse event){
         progressView.setVisibility(View.GONE);
+        listView.setVisibility(View.VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

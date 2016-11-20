@@ -35,8 +35,8 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
         TextView title = (TextView) rowView.findViewById(R.id.title);
         TextView rating = (TextView) rowView.findViewById(R.id.rating);
 
-        title.setText(movie.getTitle());
-        rating.setText(movie.getRating());
+        title.setText(movie.title);
+        rating.setText(movie.rating);
 
         return rowView;
     }
