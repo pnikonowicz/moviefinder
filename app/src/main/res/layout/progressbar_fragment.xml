@@ -12,6 +12,7 @@
         />
 
     <TextView
+        style=""
         android:id="@+id/myTextProgress"
         android:text="TEXT VIEW"
         android:layout_height="@dimen/small"

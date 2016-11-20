@@ -18,6 +18,9 @@ public class FetchMoviesService {
 
     public ArrayList<Movie> fetchMovies(int zipCode) throws IOException, JSONException {
         String json = network.retrieveMovieListFromZipCode(zipCode);
+        if(json.isEmpty()) {
+            return new ArrayList<>();
+        }
         ArrayList<Movie> movies = Movies.create(json);
         return movies;
     }

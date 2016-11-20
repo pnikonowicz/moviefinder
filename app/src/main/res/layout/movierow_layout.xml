@@ -20,4 +20,4 @@
         android:background="@color/ratingColor"
         android:layout_alignParentRight="true"
         android:text="Rating"/>
-</RelativeLayout>
+</RelativeLayout>   

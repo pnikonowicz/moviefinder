@@ -58,10 +58,11 @@ public class MainActivity extends FragmentActivity {
         progressView.setVisibility(View.GONE);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCriticalError(CriticalErrorEvent e) {
         String exceptionString = Arrays.toString(e.exception.getStackTrace());
-        textView.setText(exceptionString);
+        String message = e.exception.getMessage();
+        textView.setText(message + "\n" + exceptionString);
 
         textView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);

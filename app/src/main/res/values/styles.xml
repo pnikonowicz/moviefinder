@@ -6,13 +6,19 @@
 
     <style name="TextBase" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">@dimen/small</item>
     </style>
 
     <style name="TextBase.Header">
         <item name="android:textColor">@color/strong</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">60dp</item>
+        <item name="android:textSize">@dimen/large</item>
+    </style>
+
+    <style name="TextBase.Small">
+        <item name="android:textColor">@color/strong</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/small</item>
     </style>
 
 </resources>
