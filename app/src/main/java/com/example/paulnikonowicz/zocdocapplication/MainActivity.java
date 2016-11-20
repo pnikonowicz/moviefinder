@@ -2,25 +2,24 @@ package com.example.paulnikonowicz.zocdocapplication;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
-import com.example.paulnikonowicz.zocdocapplication.dao.MovieEndpoint;
-import com.example.paulnikonowicz.zocdocapplication.dao.Movies;
-import com.example.paulnikonowicz.zocdocapplication.event.RequestMovieData;
-import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
+import com.example.paulnikonowicz.zocdocapplication.dao.FetchMoviesService;
+import com.example.paulnikonowicz.zocdocapplication.event.CriticalErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends FragmentActivity {
-    private MovieEndpoint movieEndpoint;
+    private FetchMoviesService fetchMoviesService;
 
     public MainActivity() {
-        this(new MovieEndpoint());
+        this(new FetchMoviesService());
     }
 
-    public MainActivity(MovieEndpoint movieEndpoint) {
-        this.movieEndpoint = movieEndpoint;
+    public MainActivity(FetchMoviesService fetchMoviesService) {
+        this.fetchMoviesService = fetchMoviesService;
     }
 
     @Override
@@ -33,7 +32,6 @@ public class MainActivity extends FragmentActivity {
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new RequestMovieData());
     }
 
     @Override
@@ -42,10 +40,8 @@ public class MainActivity extends FragmentActivity {
         super.onStop();
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onInitialize(RequestMovieData event) {
-        EventBus.getDefault().post(new StatusEvent("Retrieving movie data"));
-
-        Movies movies = movieEndpoint.fetchMovies(98102);
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCriticalError(CriticalErrorEvent e) {
+        Toast.makeText(this, e.exception.getMessage(), Toast.LENGTH_LONG);
     }
 }

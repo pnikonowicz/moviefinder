@@ -13,18 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Network {
-    public String retrieveMovieListFromZipCode(int zip) {
+    public String retrieveMovieListFromZipCode(int zip) throws IOException {
         String todaysDate = todaysDate();
         String apiKey = "488kpuyjtxzat8q3qtg7sekx";
         String host = "data.tmsapi.com/v1.1/movies/showings";
         String urlString = getUrl(host, todaysDate, apiKey, zip+"");
 
-        URL url;
-        try {
-            url = new URL(urlString);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        URL url = new URL(urlString);
 
         HttpURLConnection urlConnection = null;
         try {
@@ -32,8 +27,6 @@ public class Network {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             String json = IOUtils.toString(in);
             return json;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         } finally {
             if(urlConnection!=null)
                 urlConnection.disconnect();

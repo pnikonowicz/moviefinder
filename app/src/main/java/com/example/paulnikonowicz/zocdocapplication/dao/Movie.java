@@ -5,24 +5,31 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Movie {
-    private JSONObject jsonObject;
+    private String rating;
+    private String title;
 
-    public Movie(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTitle() throws JSONException {
-        return jsonObject.getString("title");
+    public String getRating() {
+        return rating;
     }
 
-    public String getRating() throws JSONException {
+    public static Movie create(JSONObject jsonObject) throws JSONException {
+        Movie movie = new Movie();
+
         JSONArray ratings = jsonObject.getJSONArray("ratings");
         if(ratings.length()>0) {
             JSONObject rating = ratings.getJSONObject(0);
             String code = rating.getString("code");
-            return code;
+            movie.rating = code;
         } else {
-            return "N/A";
+            movie.rating = "N/A";
         }
+
+        movie.title = jsonObject.getString("title");
+
+        return movie;
     }
 }

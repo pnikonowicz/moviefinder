@@ -4,24 +4,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Movies {
-    private JSONArray json;
+import java.util.ArrayList;
 
-    public Movies(String jsonString) {
-        try {
-            json = new JSONArray(jsonString);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+public class Movies {
+    private int length;
+    private ArrayList<Movie> movies;
+
+    public static Movies create(String jsonString) throws JSONException {
+        JSONArray json = new JSONArray(jsonString);
+        Movies movies = new Movies();
+
+        movies.length = json.length();
+        movies.movies = new ArrayList<Movie>();
+
+        for(int i=0; i<json.length(); i++) {
+            JSONObject movieJson = json.getJSONObject(i);
+            Movie movie = Movie.create(movieJson);
+            movies.movies.add(movie);
         }
+
+        return movies;
     }
 
     public int getCount() {
-        return json.length();
+        return length;
     }
 
-    public Movie get(int i) throws JSONException {
-        JSONObject jsonObject = json.getJSONObject(i);
-        Movie movie = new Movie(jsonObject);
-        return movie;
+    public Movie get(int i) {
+        return movies.get(i);
     }
 }

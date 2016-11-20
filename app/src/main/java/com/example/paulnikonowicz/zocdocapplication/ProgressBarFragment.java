@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.paulnikonowicz.zocdocapplication.event.DataRetrievedEvent;
+import com.example.paulnikonowicz.zocdocapplication.event.MovieDataResponse;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +50,7 @@ public class ProgressBarFragment extends Fragment {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void loadBasicListData(DataRetrievedEvent event){
+    public void loadBasicListData(MovieDataResponse event){
         getView().setVisibility(View.GONE);
     }
 
