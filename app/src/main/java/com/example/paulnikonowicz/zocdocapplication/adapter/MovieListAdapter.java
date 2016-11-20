@@ -17,11 +17,6 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
         super(context, resource, objects);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
     @NonNull
     @Override
     public View getView(int position, View rowView, ViewGroup parent) {
@@ -39,10 +34,5 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
         rating.setText(movie.rating);
 
         return rowView;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
     }
 }

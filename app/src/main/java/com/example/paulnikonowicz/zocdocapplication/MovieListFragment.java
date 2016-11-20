@@ -89,7 +89,6 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Movie m = (Movie) adapterView.getItemAtPosition(i);
         Intent intent = MovieDetailsActivity.createIntent(getContext(), m);
-
         startActivity(intent);
     }
 }
