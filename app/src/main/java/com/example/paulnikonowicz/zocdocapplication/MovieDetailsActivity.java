@@ -2,15 +2,40 @@ package com.example.paulnikonowicz.zocdocapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.paulnikonowicz.zocdocapplication.dao.FetchImageService;
 import com.example.paulnikonowicz.zocdocapplication.dao.Movie;
+import com.example.paulnikonowicz.zocdocapplication.event.CriticalErrorEvent;
+import com.example.paulnikonowicz.zocdocapplication.event.ImageRequest;
+import com.example.paulnikonowicz.zocdocapplication.event.ImageResponse;
+import com.example.paulnikonowicz.zocdocapplication.event.MovieDataResponse;
+import com.google.android.gms.games.event.Event;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Arrays;
 
 public class MovieDetailsActivity extends FragmentActivity{
     private Movie movie;
+    private FetchImageService fetchImageService;
+
+    public MovieDetailsActivity() {
+        this(new FetchImageService());
+    }
+
+    public MovieDetailsActivity(FetchImageService fetchImageService) {
+        this.fetchImageService = fetchImageService;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +49,42 @@ public class MovieDetailsActivity extends FragmentActivity{
         TextView title = (TextView) findViewById(R.id.title);
         TextView description = (TextView) findViewById(R.id.description);
 
+        title.setText(movie.getTitle());
+        description.setText(movie.getDescription());
+
+        EventBus.getDefault().register(this);
+        EventBus.getDefault().post(new ImageRequest(movie.getImageLink()));
         super.onStart();
     }
 
     @Override
     protected void onStop() {
+        EventBus.getDefault().unregister(this);
+
         movie = null;
+
         super.onStop();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void setImage(ImageResponse response){
+        ImageView imageView = (ImageView) findViewById(R.id.background);
+        imageView.setImageBitmap(response.image);
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void getImageFromNetwork(ImageRequest request) {
+        try {
+            Bitmap image = fetchImageService.fetchImage(request.imageLink);
+            EventBus.getDefault().post(new ImageResponse(image));
+        } catch (Exception e) {
+            EventBus.getDefault().post(new CriticalErrorEvent(e));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCriticalError(CriticalErrorEvent e) {
+        Toast.makeText(this, "Could not download image", Toast.LENGTH_LONG);
     }
 
     public static Intent createIntent(Context context, Movie m) {
