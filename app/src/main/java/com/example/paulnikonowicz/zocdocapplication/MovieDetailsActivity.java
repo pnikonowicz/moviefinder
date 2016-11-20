@@ -3,9 +3,11 @@ package com.example.paulnikonowicz.zocdocapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,9 +27,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Arrays;
 
-public class MovieDetailsActivity extends FragmentActivity{
+public class MovieDetailsActivity extends FragmentActivity implements View.OnClickListener {
     private Movie movie;
     private FetchImageService fetchImageService;
+    private Button button;
 
     public MovieDetailsActivity() {
         this(new FetchImageService());
@@ -48,9 +51,11 @@ public class MovieDetailsActivity extends FragmentActivity{
         movie = fromIntent(getIntent());
         TextView title = (TextView) findViewById(R.id.title);
         TextView description = (TextView) findViewById(R.id.description);
+        button = (Button) findViewById(R.id.button);
 
         title.setText(movie.getTitle());
         description.setText(movie.getDescription());
+        button.setOnClickListener(this);
 
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(new ImageRequest(movie.getImageLink()));
@@ -62,6 +67,8 @@ public class MovieDetailsActivity extends FragmentActivity{
         EventBus.getDefault().unregister(this);
 
         movie = null;
+        button.setOnClickListener(null);
+        button = null;
 
         super.onStop();
     }
@@ -100,5 +107,13 @@ public class MovieDetailsActivity extends FragmentActivity{
         Gson gson = new Gson();
         Movie m = gson.fromJson(json, Movie.class);
         return m;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent viewIntent =
+                new Intent("android.intent.action.VIEW",
+                        Uri.parse("http://www.zocdoc.com/"));
+        startActivity(viewIntent);
     }
 }
