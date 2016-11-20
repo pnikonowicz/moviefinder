@@ -48,9 +48,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
         super.onStart();
 
         listView = (ListView) getView();
-
         listView.setOnItemClickListener(this);
-        getView().setVisibility(View.GONE);
 
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(new MovieDataRequest(98102));
@@ -58,10 +56,12 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
 
     @Override
     public void onStop() {
-        super.onStop();
         EventBus.getDefault().unregister(this);
+
         listView.setOnItemClickListener(null);
         listView = null;
+
+        super.onStop();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
