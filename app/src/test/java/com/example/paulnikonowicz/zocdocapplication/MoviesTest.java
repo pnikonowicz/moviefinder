@@ -1,9 +1,11 @@
 package com.example.paulnikonowicz.zocdocapplication;
 
+import com.example.paulnikonowicz.zocdocapplication.dao.Movie;
 import com.example.paulnikonowicz.zocdocapplication.dao.Movies;
 
 import junit.framework.Assert;
 
+import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,6 +20,18 @@ public class MoviesTest {
     @Test
     public void canGetMovie() {
         int count = movies.getCount();
-        Assert.assertEquals(0, count);
+        Assert.assertEquals(1, count);
+    }
+
+    @Test
+    public void canGetTitle() throws JSONException {
+        Movie movie = movies.get(0);
+        Assert.assertEquals("Moonlight", movie.getTitle());
+    }
+
+    @Test
+    public void canGetRating() throws JSONException {
+        Movie movie = movies.get(0);
+        Assert.assertEquals("R", movie.getRating());
     }
 }

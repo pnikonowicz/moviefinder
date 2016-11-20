@@ -9,7 +9,7 @@ public class Movies {
 
     public Movies(String jsonString) {
         try {
-            json = new JSONArray(new JSONObject(jsonString));
+            json = new JSONArray(jsonString);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -17,5 +17,11 @@ public class Movies {
 
     public int getCount() {
         return json.length();
+    }
+
+    public Movie get(int i) throws JSONException {
+        JSONObject jsonObject = json.getJSONObject(i);
+        Movie movie = new Movie(jsonObject);
+        return movie;
     }
 }
