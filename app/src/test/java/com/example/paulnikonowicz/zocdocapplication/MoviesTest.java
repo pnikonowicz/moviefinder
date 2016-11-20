@@ -1,17 +1,12 @@
 package com.example.paulnikonowicz.zocdocapplication;
 
-import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
-
 import com.example.paulnikonowicz.zocdocapplication.dao.Movies;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
 public class MoviesTest {
     private Movies movies;
 
