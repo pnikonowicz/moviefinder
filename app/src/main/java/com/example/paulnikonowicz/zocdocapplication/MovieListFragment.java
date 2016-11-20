@@ -84,7 +84,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
             int movieCount = movies.size();
             EventBus.getDefault().post(new MovieDataResponse(movies));
         } catch (Exception e) {
-            EventBus.getDefault().post(new CriticalErrorEvent(e));
+            EventBus.getDefault().postSticky(new CriticalErrorEvent(e));
         }
     }
 
