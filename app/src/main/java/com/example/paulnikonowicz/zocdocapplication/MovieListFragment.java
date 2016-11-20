@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.paulnikonowicz.zocdocapplication.adapter.MovieListAdapter;
 import com.example.paulnikonowicz.zocdocapplication.dao.FetchMoviesService;
@@ -18,7 +17,6 @@ import com.example.paulnikonowicz.zocdocapplication.event.CriticalErrorEvent;
 import com.example.paulnikonowicz.zocdocapplication.event.MovieDataRequest;
 import com.example.paulnikonowicz.zocdocapplication.event.MovieDataResponse;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
-import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,21 +24,16 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import static android.R.attr.value;
-
 
 public class MovieListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private FetchMoviesService fetchMoviesService;
-    private Gson gson;
-    private ListView listView;
 
     public MovieListFragment() {
-        this(new FetchMoviesService(), new Gson());
+        this(new FetchMoviesService());
     }
 
-    public MovieListFragment(FetchMoviesService fetchMoviesService, Gson gson) {
+    public MovieListFragment(FetchMoviesService fetchMoviesService) {
         this.fetchMoviesService = fetchMoviesService;
-        this.gson = gson;
     }
 
     @Override
@@ -53,8 +46,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     public void onStart() {
         super.onStart();
 
-        listView = (ListView) getView();
-        listView.setOnItemClickListener(this);
+        getListView().setOnItemClickListener(this);
 
         EventBus.getDefault().register(this);
         EventBus.getDefault().post(new MovieDataRequest(98102));
@@ -64,8 +56,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     public void onStop() {
         EventBus.getDefault().unregister(this);
 
-        listView.setOnItemClickListener(null);
-        listView = null;
+        getListView().setOnItemClickListener(null);
 
         super.onStop();
     }
@@ -74,7 +65,7 @@ public class MovieListFragment extends ListFragment implements AdapterView.OnIte
     public void loadBasicListData(MovieDataResponse event){
         EventBus.getDefault().post(new StatusEvent("Found " + event.movieCount() + " movies!"));
 
-        listView.setAdapter(new MovieListAdapter(getActivity(), R.id.listview, event.getMovies()));
+        setListAdapter(new MovieListAdapter(getActivity(), R.layout.movierow_layout, event.getMovies()));
 
         getView().setVisibility(View.VISIBLE);
     }

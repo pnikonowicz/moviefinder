@@ -17,11 +17,22 @@ public class FetchMoviesService {
     }
 
     public ArrayList<Movie> fetchMovies(int zipCode) throws IOException, JSONException {
-        String json = network.retrieveMovieListFromZipCode(zipCode);
-        if(json.isEmpty()) {
-            return new ArrayList<>();
+        //because of limit issues with the CDN, just ignore this and manually load some movies up
+//        try {
+//            json = network.retrieveMovieListFromZipCode(zipCode);
+//        } catch(Exception e) {
+//            //because of limit issues with the CDN, just ignore this and manually load some movies up
+//        }
+
+        ArrayList<Movie> movies = new ArrayList<>();
+        for(int i=0; i<20; i++) {
+            Movie m = new Movie();
+            m.title = "Movie Title: " + i;
+            m.rating = "R";
+            m.imageLink = "https://placehold.it/350x150?text=\"Movie " + i + "\"";
+            m.description = "a movie about " + i;
+            movies.add(m);
         }
-        ArrayList<Movie> movies = Movies.create(json);
         return movies;
     }
 }

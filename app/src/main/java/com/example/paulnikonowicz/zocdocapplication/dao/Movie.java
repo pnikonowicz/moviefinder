@@ -5,10 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Movie {
-    private String rating;
-    private String title;
-    private String imageLink;
-    private String description;
+    public String rating;
+    public String title;
+    public String imageLink;
+    public String description;
 
     public String getTitle() {
         return title;
