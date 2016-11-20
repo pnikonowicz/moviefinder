@@ -3,7 +3,8 @@ package com.example.paulnikonowicz.zocdocapplication;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.example.paulnikonowicz.zocdocapplication.dao.Network;
+import com.example.paulnikonowicz.zocdocapplication.dao.MovieEndpoint;
+import com.example.paulnikonowicz.zocdocapplication.dao.Movies;
 import com.example.paulnikonowicz.zocdocapplication.event.RequestMovieData;
 import com.example.paulnikonowicz.zocdocapplication.event.StatusEvent;
 
@@ -12,14 +13,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends FragmentActivity {
-    private Network network;
+    private MovieEndpoint movieEndpoint;
 
     public MainActivity() {
-        this(new Network());
+        this(new MovieEndpoint());
     }
 
-    public MainActivity(Network network) {
-        this.network = network;
+    public MainActivity(MovieEndpoint movieEndpoint) {
+        this.movieEndpoint = movieEndpoint;
     }
 
     @Override
@@ -45,6 +46,6 @@ public class MainActivity extends FragmentActivity {
     public void onInitialize(RequestMovieData event) {
         EventBus.getDefault().post(new StatusEvent("Retrieving movie data"));
 
-        network.getSomething();
+        Movies movies = movieEndpoint.fetchMovies(98102);
     }
 }

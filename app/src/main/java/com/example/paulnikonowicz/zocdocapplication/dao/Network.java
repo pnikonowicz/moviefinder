@@ -13,15 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Network {
-    public String getSomething() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return "TODO";
-    }
-
     public String retrieveMovieListFromZipCode(int zip) {
         String todaysDate = todaysDate();
         String apiKey = "488kpuyjtxzat8q3qtg7sekx";
