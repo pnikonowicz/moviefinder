@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 public class FetchMoviesService {
     public ArrayList<Movie> fetchMovies() throws IOException, JSONException, InterruptedException {
-        Thread.sleep(5000); //simulate network delay
+        Thread.sleep(2000); //simulate network delay to demonstrate that we are not on the main thread
+
         String[] ratings = new String[]{"R", "G", "PG13"};
         ArrayList<Movie> movies = new ArrayList<>();
         for(int i=0; i<20; i++) {

@@ -10,7 +10,7 @@ import java.net.HttpURLConnection;
 public class FetchImageService {
     public Bitmap fetchImage(String imageLink) throws IOException {
         //I am intentionally not resizing the image here
-        //because for this interview application, i am focusing on lean code
+        //because i am focusing on lean code for this interview application
         java.net.URL url = new java.net.URL(imageLink);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoInput(true);
